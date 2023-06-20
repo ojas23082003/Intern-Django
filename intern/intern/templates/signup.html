@@ -7,7 +7,7 @@
         <p style="color:red; text-align:center">{{message}}</p>
     </div>
     <div class="container" style="width: 75%;margin-top:100px">
-        <form action="signup" method="POST">
+        <form action="signup" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">First Name</label>
