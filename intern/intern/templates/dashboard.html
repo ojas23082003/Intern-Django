@@ -2,31 +2,52 @@
 {% block content %}
     <div class="container" style="margin-top: 100px;">
         <div class="container">
-
+            {% if doctor %}
+                <form action="{% url 'dashboard' %}" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Title</label>
+                        <input type="text" class="form-control" id="title" name="title" aria-describedby="emailHelp" placeholder="Title" required>
+                        <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Summary</label>
+                        <input type="text" class="form-control" id="summary" name="summary" aria-describedby="emailHelp" placeholder="Summary" required>
+                        <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Content</label>
+                        <input type="text" class="form-control" id="content" name="content" aria-describedby="emailHelp" placeholder="Content" required>
+                        <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+                    </div>
+                    <div class="mb-3">
+                        <label for="file" class="form-label">Upload Image</label>
+                        <input class="form-control" type="file" id="image" name="image" required>
+                      </div>
+                    <div class="mb-3">
+                        <label for="category" class="form-label">Category </label>
+                        <input class="form-control" type="text" id="category" name="category" required>
+                      
+                    </div>
+                    <button class="btn btn-success" type="submit">Add</button>
+                </form>
+            {% endif %}
         </div>
-        <ul class="list-group">
-            <a href="#" class="list-group-item list-group-item-action active">
-                Username : {{user.username}}
-            </a>
-            <a href="#" class="list-group-item list-group-item-action ">
-                First name : {{user.first_name}}
-            </a>
-            <a href="#" class="list-group-item list-group-item-action active">
-                Last name : {{user.last_name}}
-            </a>
-            <a href="#" class="list-group-item list-group-item-action">
-                Email : {{user.email}}
-            </a>
-        </ul>
-        {% for profiles in profile %}
-            <ul class="list-group">
-                <li class="list-group-item active">Address : {{profiles.address}}</li>
-                <li class="list-group-item">Type : {{profiles.usertype}}</li>
-            </ul>
-            <div class="container" style="text-align: center;">
-                <img src="{{profiles.image.url}}" alt="Profile picture" style="width: 100px;height:100px;object-fit:cover">
+        <div class="container" style="display: flex;">
+            {% for blog in blogs %}
+            <div class="card" style="width: 18rem;margin:20px">
+                <img class="card-img-top" src="{{blog.image.url}}" alt="Card image cap">
+                <div class="card-body">
+                  <h5 class="card-title">{{blog.title}}</h5>
+                  <p class="card-text">{{blog.summary}}</p>
+                  <p class="card-text">{{blog.content}}</p>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">Category : {{blog.category.name}}</p>
+                </div>
             </div>
-        {% endfor %}
+            {% endfor %}
+        </div>
 
     </div>
 {% endblock %}
