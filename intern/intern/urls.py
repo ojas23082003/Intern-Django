@@ -30,6 +30,7 @@ urlpatterns = [
     path('login_form', views.login_form, name='login_form'),
     path('logout_user', views.logout_user, name='logout_user'),
     path('signup', views.signup_form, name='signup'),
+    path('upload/<int:id>', views.upload, name='upload'),
     # url(r'^media/(?P<path>.*)$', serve, {'document_root':settings.MEDIA_ROOT}),
     # url(r'^static/(?P<path>.*)$', serve, {'document_root':settings.STATIC_ROOT}),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -22,6 +22,8 @@ class Blog(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, blank=True)
     summary = models.TextField()
     content = models.TextField()
+    is_visible = models.BooleanField(default=False)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return self.title

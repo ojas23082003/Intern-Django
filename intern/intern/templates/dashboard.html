@@ -29,23 +29,59 @@
                         <input class="form-control" type="text" id="category" name="category" required>
                       
                     </div>
+                    <div class="mb-3">
+                        <label for="" class="form-label">
+                            Select mode :
+                        </label>
+                        <select class="form-select" aria-label="Default select example" id="draft" name="draft" required>
+                            <option value="Draft" selected>Draft</option>
+                            <option value="Upload">Upload</option>
+                        </select>
+                    </div>
                     <button class="btn btn-success" type="submit">Add</button>
                 </form>
+                <div class="container" style="display: flex;">
+                    {% for author_blog in author_blogs %}
+                        {% if author_blog.is_visible %}
+                        {% else %}
+                            <div class="card" style="width: 18rem;margin:20px">
+                                <img class="card-img-top" src="{{author_blog.image.url}}" alt="Card image cap">
+                                <div class="card-body">
+                                <h5 class="card-title">{{author_blog.title}}</h5>
+                                <p class="card-text">{{author_blog.summary}}</p>
+                                <p class="card-text">{{author_blog.content}}</p>
+                                </div>
+                                <div class="card-body">
+                                    <p class="card-text">Category : {{author_blog.category.name}}</p>
+                                </div>
+                                <div class="card-body">
+                                    <form action="{% url 'upload' author_blog.id %}" method="POST">
+                                        {% csrf_token %}
+                                        <button class="btn btn-primary" type="submit">Upload</button>
+                                    </form>
+                                </div>
+                            </div>
+                        {% endif %}
+                        
+                    {% endfor %}
+                </div>
             {% endif %}
         </div>
         <div class="container" style="display: flex;">
             {% for blog in blogs %}
-            <div class="card" style="width: 18rem;margin:20px">
-                <img class="card-img-top" src="{{blog.image.url}}" alt="Card image cap">
-                <div class="card-body">
-                  <h5 class="card-title">{{blog.title}}</h5>
-                  <p class="card-text">{{blog.summary}}</p>
-                  <p class="card-text">{{blog.content}}</p>
-                </div>
-                <div class="card-body">
-                    <p class="card-text">Category : {{blog.category.name}}</p>
-                </div>
-            </div>
+                {% if blog.is_visible %}
+                    <div class="card" style="width: 18rem;margin:20px">
+                        <img class="card-img-top" src="{{blog.image.url}}" alt="Card image cap">
+                        <div class="card-body">
+                        <h5 class="card-title">{{blog.title}}</h5>
+                        <p class="card-text">{{blog.summary}}</p>
+                        <p class="card-text">{{blog.content}}</p>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">Category : {{blog.category.name}}</p>
+                        </div>
+                    </div>
+                {% endif %}
             {% endfor %}
         </div>
 

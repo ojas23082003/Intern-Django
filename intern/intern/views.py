@@ -19,7 +19,12 @@ def dashboard(request):
             summary = request.POST.get('summary')
             content = request.POST.get('content')
             categories = Category.objects.all()
-            blog = Blog(title=title,image=image,summary=summary,content=content)
+            draft = request.POST.get('draft')
+            if draft=="Draft":
+                is_visible = False
+            else:
+                is_visible = True
+            blog = Blog(title=title,image=image,summary=summary,content=content, author=request.user, is_visible=is_visible)
             blog.save()
             if categories!=None:
                 for cate in categories:
@@ -36,14 +41,21 @@ def dashboard(request):
             user = request.user
             profile = Profile.objects.get(user__id=user.id)
             blogs = Blog.objects.all()
+            author_blogs = Blog.objects.filter(author__id=user.id)
             categories = Category.objects.all()
             if profile.is_doctor:
                 doctor = True
             else:
                 doctor = False
-            return render(request, 'dashboard.html', {'doctor':doctor, 'blogs':blogs, 'categories':categories})
+            return render(request, 'dashboard.html', {'doctor':doctor, 'blogs':blogs, 'categories':categories, 'author_blogs':author_blogs})
     else:
         return redirect('login_form')
+    
+def upload(request, id):
+    blog = Blog.objects.get(id=id)
+    blog.is_visible = True
+    blog.save()
+    return redirect('dashboard')
     
 def logout_user(request):
     logout(request)
