@@ -65,6 +65,57 @@
                         
                     {% endfor %}
                 </div>
+                <div class="container" style="display: flex;">
+                    <h3>My appointments : </h3>
+                    {% for appointment in appointments %}
+                    <div class="card" style="width: 18rem;margin:20px">
+                        <div class="card-body">
+                          <h5 class="card-title">{{appointment.doctor.first_name}}</h5>
+                          <p class="card-text">Date : {{appointment.date}}</p>
+                          <p class="card-text">Start time : {{appointment.start_time}}</p>
+                          <p class="card-text">End time : {{appointment.end_time}}</p>
+                          {% if appointment.is_pending %}
+                          <p class="card-text">Status : Pending</p>
+                          <a href="{% url 'approve' appointment.id %}" class="btn btn-primary">Approve</a>
+                          {% else %}
+                          <p class="card-text">Status : Approved</p>
+                          {% endif %}
+                        </div>
+                      </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+            <div class="container" style="display:flex !important">
+                <h3>Doctors : </h3>
+                {% for doct in doctors %}
+                <div class="card" style="width: 18rem;margin:20px">
+                    <img class="card-img-top" src="{{doct.image.url}}" alt="Card image cap">
+                    <div class="card-body">
+                      <h5 class="card-title">{{doct.user.first_name}}</h5>
+                      <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
+                      <a href="{% url 'apply' doct.user.id %}" class="btn btn-primary">Book appointment</a>
+                    </div>
+                  </div>
+                {% endfor %}
+            </div>
+            <div class="container">
+                <h3>My appointments : </h3>
+                {% for appointment in appointments %}
+                <div class="card" style="width: 18rem;margin:20px">
+                    <div class="card-body">
+                      <h5 class="card-title">{{appointment.doctor.first_name}}</h5>
+                      <p class="card-text">Date : {{appointment.date}}</p>
+                      <p class="card-text">Start time : {{appointment.start_time}}</p>
+                      <p class="card-text">End time : {{appointment.end_time}}</p>
+                      {% if appointment.is_pending %}
+                      <p class="card-text">Status : Pending</p>
+                      {% else %}
+                      <p class="card-text">Status : Approved</p>
+                      {% endif %}
+                    </div>
+                  </div>
+                {% endfor %}
+            </div>
             {% endif %}
         </div>
         <div class="container" style="display: flex;">

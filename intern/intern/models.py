@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+import datetime
 
 class Profile(models.Model):
     address = models.TextField()
@@ -27,3 +28,15 @@ class Blog(models.Model):
 
     def __str__(self):
         return self.title
+    
+class Appointment(models.Model):
+    doctor = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    speciality = models.CharField(max_length=250, null=True, blank=True)
+    patient = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True, blank=True)
+    is_pending = models.BooleanField(default=True)
+    date = models.DateField(null=True, blank=True)
+    start_time = models.TimeField(null=True, blank=True)
+    end_time = models.TimeField(null=True, blank=True)
+
+    def __str__(self):
+        return (self.doctor.first_name)

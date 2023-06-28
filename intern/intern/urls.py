@@ -31,6 +31,9 @@ urlpatterns = [
     path('logout_user', views.logout_user, name='logout_user'),
     path('signup', views.signup_form, name='signup'),
     path('upload/<int:id>', views.upload, name='upload'),
+    path('apply/<int:id>/', views.apply, name='apply'),
+    path('approve/<int:id>/', views.approve, name='approve'),
+    path('test_calender/', views.test_calendar, name='test_calender'),
     # url(r'^media/(?P<path>.*)$', serve, {'document_root':settings.MEDIA_ROOT}),
     # url(r'^static/(?P<path>.*)$', serve, {'document_root':settings.STATIC_ROOT}),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
